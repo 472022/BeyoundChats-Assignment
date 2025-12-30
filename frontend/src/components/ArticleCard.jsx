@@ -11,7 +11,14 @@ const ArticleCard = ({ article }) => {
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200 h-full flex flex-col">
         <div className="p-6 flex-1">
           <div className="flex justify-between items-start mb-4">
-            <Badge isUpdated={article.is_updated} />
+            <div className="flex flex-col gap-2">
+              <Badge isUpdated={article.is_updated} />
+              {article.category && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800 w-fit">
+                  {article.category}
+                </span>
+              )}
+            </div>
             <span className="text-xs text-gray-500 flex items-center">
               <Calendar className="w-3 h-3 mr-1" />
               {formattedDate}

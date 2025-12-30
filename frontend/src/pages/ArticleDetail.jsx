@@ -4,6 +4,7 @@ import api from '../services/api';
 import Layout from '../components/Layout';
 import Badge from '../components/Badge';
 import { ArrowLeft, ExternalLink, Calendar, User, Loader2 } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 
 const ArticleDetail = () => {
   const { id } = useParams();
@@ -66,6 +67,11 @@ const ArticleDetail = () => {
         <div className="p-8 border-b border-gray-100">
           <div className="flex items-center gap-3 mb-4">
             <Badge isUpdated={article.is_updated} />
+            {article.category && (
+              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
+                {article.category}
+              </span>
+            )}
             <span className="text-sm text-gray-500 flex items-center">
               <Calendar className="w-4 h-4 mr-1" />
               {new Date(article.published_date || article.created_at).toLocaleDateString()}
@@ -122,13 +128,21 @@ const ArticleDetail = () => {
         <div className="p-8">
           <div className="prose prose-blue max-w-none">
             {activeTab === 'enhanced' && article.is_updated ? (
-              <div className="whitespace-pre-wrap font-sans text-gray-800 leading-relaxed">
-                 {/* 
-                    Note: Ideally use a Markdown renderer like 'react-markdown' here.
-                    For now, we display plain text but preserving whitespace.
-                 */}
-                 {article.updated_content}
-              </div>
+              <ReactMarkdown 
+                className="markdown-content"
+                components={{
+                  h1: ({node, ...props}) => <h1 className="text-3xl font-bold mt-8 mb-4 text-gray-900" {...props} />,
+                  h2: ({node, ...props}) => <h2 className="text-2xl font-bold mt-6 mb-3 text-gray-800" {...props} />,
+                  h3: ({node, ...props}) => <h3 className="text-xl font-semibold mt-4 mb-2 text-gray-800" {...props} />,
+                  p: ({node, ...props}) => <p className="mb-4 leading-relaxed text-gray-700" {...props} />,
+                  ul: ({node, ...props}) => <ul className="list-disc pl-5 mb-4 space-y-2" {...props} />,
+                  ol: ({node, ...props}) => <ol className="list-decimal pl-5 mb-4 space-y-2" {...props} />,
+                  li: ({node, ...props}) => <li className="text-gray-700" {...props} />,
+                  blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-600 my-4" {...props} />,
+                }}
+              >
+                {article.updated_content}
+              </ReactMarkdown>
             ) : (
               <div dangerouslySetInnerHTML={{ __html: article.original_content_html || article.original_content_text }} />
             )}
