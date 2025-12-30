@@ -13,11 +13,11 @@ A sophisticated full-stack application that automates the entire lifecycle of bl
 
 ### 1. Simulation Dashboard
 The command center for triggering background processes. Watch the AI scrape, research, and rewrite articles in real-time.
-![Dashboard Screenshot](./images/Screenshot%202025-12-30%20210339.png)
+![Dashboard Screenshot](./Images/Screenshot%202025-12-30%20210339.png)
 
 ### 2. Article Detail View (AI Enhanced)
 Toggle between the original scraped content and the AI-rewritten version with professional Markdown formatting.
-![Article Detail Screenshot](./images/Screenshot%202025-12-30%20210305.png)
+![Article Detail Screenshot](./Images/Screenshot%202025-12-30%20210305.png)
 
 ---
 
