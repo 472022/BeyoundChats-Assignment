@@ -5,7 +5,7 @@ const executeScript = (scriptName, res) => {
   const scriptPath = path.join(__dirname, `../services/${scriptName}`);
   
   // Execute the node script
-  exec(`node "${scriptPath}"`, (error, stdout, stderr) => {
+  exec(`node "${scriptPath}"`, { timeout: 300000 }, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error executing ${scriptName}:`, error);
       return res.status(500).json({ 

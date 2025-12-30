@@ -27,8 +27,8 @@ async function startServer() {
     await sequelize.authenticate();
     console.log('Database connected...');
     
-    // Sync models (force: false ensures we don't drop existing tables)
-    await sequelize.sync({ force: false }); 
+    // Sync models (alter: true updates the schema to match the model)
+    await sequelize.sync({ alter: true }); 
     console.log('Database synced...');
 
     app.listen(PORT, () => {

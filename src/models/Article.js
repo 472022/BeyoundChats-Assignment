@@ -43,6 +43,11 @@ const Article = sequelize.define('Article', {
   references: {
     type: DataTypes.JSON,
     allowNull: true
+  },
+  category: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: 'General'
   }
 }, {
   timestamps: true,

@@ -77,11 +77,13 @@ async function rewriteContent(originalContent, referenceData) {
   const refContext = referenceData.map((ref, i) => `--- REFERENCE ${i+1} ---\n${ref.content}`).join('\n\n');
   
   const prompt = `
-  Rewrite the given article by improving structure, SEO, and readability.
+  Analyze the given article and rewrite it by improving structure, SEO, and readability.
   Follow the tone and formatting style of the reference articles provided below.
   Do not copy sentences directly from references.
   Produce original, high-quality content.
   Add relevant headings and subheadings.
+  
+  Also, determine the best Category for this article from this list: [Technology, Business, Lifestyle, Health, Science, Entertainment, General].
   
   --- REFERENCE MATERIAL ---
   ${refContext}
@@ -89,7 +91,11 @@ async function rewriteContent(originalContent, referenceData) {
   --- ORIGINAL ARTICLE ---
   ${originalContent}
   
-  OUTPUT (Markdown):
+  OUTPUT FORMAT (JSON ONLY):
+  {
+    "category": "One of the categories from the list",
+    "content": "The full rewritten article in Markdown format"
+  }
   `;
 
   try {
@@ -101,7 +107,14 @@ async function rewriteContent(originalContent, referenceData) {
       { headers: { 'Content-Type': 'application/json' } }
     );
 
-    return response.data.candidates[0].content.parts[0].text;
+    const rawText = response.data.candidates[0].content.parts[0].text;
+    // Extract JSON from potential code blocks
+    const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+        return JSON.parse(jsonMatch[0]);
+    }
+    throw new Error("Failed to parse JSON from AI response");
+
   } catch (error) {
     console.error('Gemini API Error:', error.response ? error.response.data : error.message);
     throw new Error('Failed to generate content');
@@ -137,17 +150,18 @@ async function runEnhancer() {
 
       // 3. Rewrite
       console.log('Generating AI content...');
-      const updatedText = await rewriteContent(article.original_content_text || article.original_content_html, references);
+      const result = await rewriteContent(article.original_content_text || article.original_content_html, references);
       
       // 4. Update Backend
       const updatePayload = {
-        updated_content: updatedText,
+        updated_content: result.content,
+        category: result.category,
         references: references.map(r => r.url),
         is_updated: true
       };
 
       await axios.put(`${API_BASE_URL}/articles/${article.id}`, updatePayload);
-      console.log(`Successfully updated Article ${article.id}`);
+      console.log(`Successfully updated Article ${article.id} (Category: ${result.category})`);
     }
 
   } catch (error) {
