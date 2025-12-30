@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const sequelize = require('./config/database');
 const articleRoutes = require('./routes/articleRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 
 // Routes
 app.use('/articles', articleRoutes);
+app.use('/admin', adminRoutes);
 
 // Health Check
 app.get('/', (req, res) => {
