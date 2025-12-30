@@ -1,0 +1,25 @@
+{
+  "name": "blog-scraper-api",
+  "version": "1.0.0",
+  "description": "Blog scraper and management API",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "scrape": "node src/services/runScraper.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mysql2": "^3.6.5",
+    "puppeteer": "^21.5.2",
+    "sequelize": "^6.35.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
