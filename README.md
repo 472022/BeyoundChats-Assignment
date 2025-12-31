@@ -1,9 +1,12 @@
 # Full-Stack AI Blog Management System 🤖✨
 
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://effervescent-pavlova-d4bbf0.netlify.app/)
 ![React](https://img.shields.io/badge/Frontend-React%20%2B%20Vite-blue)
 ![Node](https://img.shields.io/badge/Backend-Node.js%20%2B%20Express-green)
 ![Database](https://img.shields.io/badge/Database-SQLite%20(Sequelize)-orange)
 ![AI](https://img.shields.io/badge/AI-Google%20Gemini%202.0-purple)
+
+**🔴 LIVE DEMO:** [https://effervescent-pavlova-d4bbf0.netlify.app/](https://effervescent-pavlova-d4bbf0.netlify.app/)
 
 A sophisticated full-stack application that automates the entire lifecycle of blog content management. From scraping legacy content to enhancing it with AI, categorizing it intelligently, and presenting it in a modern, responsive UI.
 
