@@ -7,5 +7,7 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 20.11.0
+      - key: PUPPETEER_CACHE_DIR
+        value: /opt/render/project/puppeteer
       - key: GEMINI_API_KEY
         sync: false
